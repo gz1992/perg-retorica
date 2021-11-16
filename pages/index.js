@@ -13,8 +13,14 @@ export default function Home() {
 	const [resp, setRespState] = useState(respStore);
 
 	useEffect(() => {
-		document.querySelector(`.${styles.container} input[name=name]`)?.value = nameStore;
-    document.querySelector(`.${styles.container} textarea`)?.value = respStore;
+		const inputName = document.querySelector(`.${styles.container} input[name=name]`);
+		if (inputName) {
+			inputName.value = nameStore;
+		}
+		const textarea = document.querySelector(`.${styles.container} textarea`);
+		if (textarea) {
+			textarea.value = respStore;
+		}
 	}, []);
 
 	function handleSetName(e) {
@@ -35,18 +41,20 @@ export default function Home() {
 			<div>
 				<p>Informe seu nome:</p>
 				<input type="text" name="name" onKeyUp={handleSetName} />
-				<p className="mt-5">
-					Todo político é ladrão? Ou a ocasião faz o ladrão?
-				</p>
+				<p className="mt-5">Todo político é ladrão? Ou a ocasião faz o ladrão?</p>
 				<textarea onKeyUp={handleSetResp} rows={6} cols={50}></textarea>
 			</div>
 			<div className="w-75 d-flex justify-content-end mt-5">
 				<Link href="/step2">
 					<a>
 						{name == '' || resp == '' ? (
-							<button className="btn_perguntas" disabled>Próximo</button>
+							<button className="btn_perguntas" disabled>
+								Próximo
+							</button>
 						) : (
-							<button className="btn_perguntas" onClick={handleNextStep}>Próximo</button>
+							<button className="btn_perguntas" onClick={handleNextStep}>
+								Próximo
+							</button>
 						)}
 					</a>
 				</Link>

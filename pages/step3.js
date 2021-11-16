@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
 export default function Step3() {
-    const allowedAnswers = useStoreState((state) => state.allowedSelects);
+	const allowedAnswers = useStoreState((state) => state.allowedSelects);
 
 	const setAnswerStore = useStoreActions((action) => action.step3Answers.setAnswer);
 	const answerStore = useStoreState((state) => state.step3Answers.infos.answer);
@@ -12,8 +12,11 @@ export default function Step3() {
 	const [answer, setAnswer] = useState(answerStore);
 
 	useEffect(() => {
-        document.querySelector(`.${styles.container} select`)?.value = answerStore;
-    }, []);
+		const select = document.querySelector(`.${styles.container} select`);
+		if (select) {
+			select.value = answerStore;
+		}
+	}, []);
 
 	function handleSetAnswer(e) {
 		setAnswer(e.target.value);
@@ -27,14 +30,18 @@ export default function Step3() {
 					Qual dos nomes abaixo representa quem escreveu o livro Memórias Póstumas de Brás
 					Cubas?
 				</p>
-                <div className="text-center">
-                    <select className="f-size-18" onChange={handleSetAnswer}>
-                        <option value="">Escolha uma alternativa</option>
-                        {allowedAnswers.map(answer => {
-                            return (<option value={answer.value} key={answer.value}>{answer.name}</option>)
-                        })}
-                    </select>
-                </div>
+				<div className="text-center">
+					<select className="f-size-18" onChange={handleSetAnswer}>
+						<option value="">Escolha uma alternativa</option>
+						{allowedAnswers.map((answer) => {
+							return (
+								<option value={answer.value} key={answer.value}>
+									{answer.name}
+								</option>
+							);
+						})}
+					</select>
+				</div>
 			</div>
 			<div className="w-75 d-flex justify-content-between mt-5">
 				<Link href="/step2">
@@ -45,7 +52,9 @@ export default function Step3() {
 				<Link href="/review">
 					<a>
 						{answer == '' ? (
-							<button className="btn_perguntas" disabled>Finalizar Pesquisa</button>
+							<button className="btn_perguntas" disabled>
+								Finalizar Pesquisa
+							</button>
 						) : (
 							<button className="btn_perguntas">Finalizar Pesquisa</button>
 						)}

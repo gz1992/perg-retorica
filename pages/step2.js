@@ -27,7 +27,10 @@ export default function Step2() {
 			}
 		});
 
-        document.querySelector(`.${homeStyles.container} textarea`)?.value = resp1Store;
+		const textarea = document.querySelector(`.${homeStyles.container} textarea`);
+		if (textarea) {
+			textarea.value = resp1Store;
+		}
 
 		const allAnswer2 = Array.from(
 			document.querySelectorAll(`.${homeStyles.container} .anwer2question`)
@@ -132,9 +135,13 @@ export default function Step2() {
 						{answer == '' ||
 						(answer == 'no' && resp2 == '') ||
 						(answer == 'yes' && resp1 == '') ? (
-							<button className="btn_perguntas" disabled>Próximo</button>
+							<button className="btn_perguntas" disabled>
+								Próximo
+							</button>
 						) : (
-							<button className="btn_perguntas" onClick={handleNextStep}>Próximo</button>
+							<button className="btn_perguntas" onClick={handleNextStep}>
+								Próximo
+							</button>
 						)}
 					</a>
 				</Link>
