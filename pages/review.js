@@ -15,7 +15,15 @@ export default function Step2() {
 	useEffect(() => {
 		allSelects.map((singleSelect) => {
 			if (singleSelect.value == infosStep3.answer) {
-				setTranslateAnswer(singleSelect.name);
+				// const result = getCountryFromName(singleSelect.name);
+				fetch(`https://api.nationalize.io/?name=${singleSelect.name.split(' ')[0]}`)
+					.then((resp) => resp.json())
+					.then(function (json) {
+						console.log(json);
+						setTranslateAnswer(
+							`${singleSelect.name} provavelmente é de ${json['country'][0]['country_id']}`
+						);
+					});
 			}
 		});
 		if (infosStep2.radio == 'yes') {
